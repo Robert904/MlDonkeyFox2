@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+	<title>MlDonkeyFox Options</title>
+	<link rel="stylesheet" type="text/css" href="options.css" />
+</head>
+
+<body>
+	<fieldset id="server" class="container">
+		<legend>MLDonkey Server</legend>
+		<ul>
+			<li>
+				<label class="section">Address</label>
+				<div class="option">
+					<select id="protocol">
+						<option>http</option>
+						<option>https</option>
+					</select>://<input id="url" type="text"/>:<input id="port" type="text"/>
+				</div>
+			</li>
+			<li>
+				<div class="text">Set Username and Password only if your server needs it</div>
+			</li>
+			<li>
+				<label class="section">Username</label>
+				<div class="option">
+					<input id="user" type="text" />
+				</div>
+			</li>
+			<li>
+				<label class="section">Password</label>
+				<div class="option">
+					<input id="password" type="password" />
+				</div>
+			</li>
+		</ul>
+	</fieldset>
+	<fieldset id="protocols" class="container">
+		<legend>Protocols to handle</legend>
+		<ul>
+			<li>
+				<label class="section">Protocols</label>
+				<div class="option">
+					<ul>
+						<li>
+							<input type="checkbox" name="ed2k" id="ed2k" />
+							<label for="ed2k">ed2k</label>
+						</li>
+						<li>
+							<input type="checkbox" name="magnet" id="magnet" />
+							<label for="magnet">magnet</label>
+						</li>
+						<li>
+							<input type="checkbox" name="bittorrent" id="bittorrent" />
+							<label for="bittorrent">bittorrent</label>
+						</li>
+					</ul>
+				</div>
+			</li>
+		</ul>
+	</fieldset>
+	<div id="buttoncontainer">
+		<div class="message"></div>
+		<button class="submit">Save</button>
+	</div>
+	<script src="options.js"></script>
+</body>
+
+</html>

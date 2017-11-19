@@ -1,0 +1,56 @@
+
+#mldonkeyfox2_messages_area {
+	font-family:"Trebuchet MS", Verdana, arial;
+	font-size: 16px;
+	position: fixed;
+	top: 0;
+	right: 0;
+	z-index: 999999;
+}
+
+#mldonkeyfox2_messages_area > div {
+	display: block;
+	text-align: center;
+	font-size: 0;
+	margin: 0;
+	padding: 0;
+	border-radius: 1em;
+	transition: all 0.5s;
+	opacity: 0;
+}
+
+#mldonkeyfox2_messages_area > div.mldonkey2_show {
+	margin: 1em;
+	padding: 1em;
+	opacity: 1;
+	font-size: 1em;
+}
+
+#mldonkeyfox2_messages_area > div.mldonkeyfox2_info {
+	background: #99ff66;
+	color: #336600;
+}
+
+#mldonkeyfox2_messages_area > div.mldonkeyfox2_warning {
+	background: #ff9933;
+	color: black;
+}
+
+#mldonkeyfox2_messages_area > div.mldonkeyfox2_error {
+	background: #cc3300;
+	color: black;
+}
+
+#mldonkeyfox2_messages_area p.mldonkey2_title {
+	margin: 2px;
+	font-size: 1.4em;
+}
+
+#mldonkeyfox2_messages_area p.mldonkey2_url {
+	margin: 2px;
+}
+
+#mldonkeyfox2_messages_area p.mldonkey2_bottom {
+	margin: 2px;
+	font-variant: italic;
+}

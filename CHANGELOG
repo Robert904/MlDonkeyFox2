@@ -1,0 +1,18 @@
+mldonkeyfox2 (0.14)
+  * Messages are animated
+  
+mldonkeyfox2 (0.13)
+  * better looking
+  * Support bittorrent mime-type download
+  * Support redirect for ed2k and magnet
+
+mldonkeyfox2 (0.10)
+  * Meant to replace mldonkeyfox XUL-based extension
+  * Complete rewrite as webextension addon (XUL is being deprecated)
+  * requires firefox 53+
+  * Limited support: clicking on ed2k// and magnet:// links
+  * missing functionalities:
+    - torrent files
+	- starting download for non-clicking links (redirects)
+	- starting downloads based on mime-type
+

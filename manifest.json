@@ -1,0 +1,45 @@
+{
+
+	"manifest_version": 2,
+	"name": "MlDonkeyFox2",
+	"version": "0.14",
+
+	"applications": {
+		"gecko": {
+			"id": "mldonkeyfox2@percu.be",
+			"strict_min_version": "53.0"
+		}
+	},
+
+	"description": "Protocol handler and link submitter for MLDonkey",
+	
+	"permissions": [
+		"storage",
+		"webRequest",
+		"webRequestBlocking",
+		"<all_urls>"
+	],
+
+	"icons": {
+		"32": "icons/icon32.png",
+		"16": "icons/icon16.png"
+	},
+
+	"content_scripts": [
+		{
+			"matches": ["http://*/*", "https://*/*"],
+			"css": ["content-script.css"],
+			"js": ["content-script.js"],
+			"run_at": "document_end"
+		}
+	],
+	
+	"background": {
+		"scripts": ["background-script.js"]
+	},
+
+	"options_ui": {
+		"page": "options/options.html"
+	}
+
+}
