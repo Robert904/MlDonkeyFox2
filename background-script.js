@@ -160,7 +160,7 @@ function checkRequest(event) {
 
 function findHeader(headers, name) {
 	for ( let header of headers ) {
-		if ( header.name == name )
+		if ( header.name.toLowerCase() == name.toLowerCase() )
 			return header.value;
 	}
 	return null;
