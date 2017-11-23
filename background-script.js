@@ -142,14 +142,20 @@ function getHeaders(event) {
 	}
 	// check for torrent file type
 	else {
-		if ( findHeader(event.responseHeaders, "content-type") == "application/x-bittorrent" ) {
-			submitURI( {type: "torrent_header", uri: event.url, description: event.url} ).then( (response) => {
-				response.type = "display";
-				browser.tabs.sendMessage(event.tabId, response);
-			} );
-			return { redirectUrl: "about:blank" };
+		if ( config.bittorrent ) {
+			if ( findHeader(event.responseHeaders, "content-type") == "application/x-bittorrent" ) {
+				submitURI( {type: "torrent_header", uri: event.url, description: event.url} ).then( (response) => {
+					response.type = "display";
+					browser.tabs.sendMessage(event.tabId, response);
+				} );
+				return { redirectUrl: "about:blank" };
+			}
 		}
 	}
+}
+
+function checkRequest(event) {
+	
 }
 
 function findHeader(headers, name) {
@@ -160,10 +166,11 @@ function findHeader(headers, name) {
 	return null;
 }
 
-function registerBittorrentContent() {
+function registerWebrequests() {
+	browser.webRequest.onHeadersReceived.removeListener(getHeaders)
 	browser.webRequest.onHeadersReceived.addListener(getHeaders, {urls: ["http://*/*", "https://*/*"], types: ["main_frame", "sub_frame"]}, ["blocking", "responseHeaders"]);
 }
 
-getConfig().then( () => { registerBittorrentContent(); } );
+getConfig().then( () => { registerWebrequests(); } );
 browser.runtime.onMessage.addListener(getMessage);
 
