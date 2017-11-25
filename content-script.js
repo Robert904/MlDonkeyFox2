@@ -68,6 +68,23 @@ function displayMessage(message) {
 		bottom.textContent = message.bottom;
 		item.appendChild(bottom)
 	}
+	if ( message.action ) {
+		switch (message.action) {
+			case "force_download":
+				clearForceDownloadActionButton();
+				let actionButton = document.createElement("button");
+				actionButton.id = "mldonkeyfox2_force_download_action_button";
+				actionButton.className += "mldonkeyfox2_action_button";
+				actionButton.textContent = message.label;
+				actionButton.addEventListener("click", forceDownload, true);
+				actionButton.value =  JSON.stringify(message);
+				item.appendChild(actionButton);
+				break;
+			case "submitted":
+				clearForceDownloadActionButton();
+				break;
+		}
+	}
 	
 	container.appendChild(item);
 	
@@ -78,6 +95,12 @@ function displayMessage(message) {
 			container.removeChild(item);
 		}, 500);
 	}, 5000);
+}
+
+function clearForceDownloadActionButton() {
+	let button = document.getElementById("mldonkeyfox2_force_download_action_button");
+	if ( button )
+		button.outerHTML = "";
 }
 
 // link all links click events to a callback
@@ -103,6 +126,18 @@ function linkClicked(e) {
 	e.stopPropagation();
 	e.stopImmediatePropagation()
 	browser.runtime.sendMessage({type: "submit", uri: e.currentTarget.href, description: e.currentTarget.textContent}).then( (response) => {
+		if ( response )
+			displayMessage(response);
+	});
+	return false;
+}
+
+function forceDownload(e) {
+	e.preventDefault();
+	e.stopPropagation();
+	e.stopImmediatePropagation()
+	let message = JSON.parse(e.currentTarget.value);
+	browser.runtime.sendMessage({type: "force_dl", url: message.url}).then( (response) => {
 		if ( response )
 			displayMessage(response);
 	});

@@ -1,4 +1,7 @@
-mldonkeyfox2 (0.16)
+mldonkeyfox2 (0.18)
+  * Propose to force download when the link was downloaded before
+  
+mldonkeyfox2 (0.17)
   * merge patch from solracfs - case insensitive http header lookout
   
 mldonkeyfox2 (0.16)

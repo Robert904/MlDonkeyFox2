@@ -15,7 +15,8 @@ function getMessage(message, sender, senderResponse) {
 			return true;
 			break;
 		case "force_dl":
-//TODO: propose to force download when already downloaded
+			forceDownload(message).then( (response) => { senderResponse(response); });
+			return true;
 			break;
 		default:
 			console.log("MlDonkeyFox2: incorrect message type received in background script" + message.type);
@@ -55,6 +56,43 @@ function reloadConfig(newConfig) {
 	});
 }
 
+function forceDownload(target) {
+	return new Promise( (resolve, reject) => {
+		if ( !config.url ) {
+			resolve({title: "Please, first configure the MlDonkeyFox addon", level: "error"});
+		}
+		let mldonkeyUrl = getMldonkeyUri();
+		
+		let fullUrl = mldonkeyUrl + "/submit?q=force_download";
+		let request = new XMLHttpRequest();
+		
+		request.open("GET", fullUrl, true);
+		
+		request.onreadystatechange = function() {
+			if ( request.readyState == 4 ) {
+				if ( request.status == 200 ) {
+					let resp = request.responseText;
+					if ( resp.search("Forced start of") != -1 ) {
+						resolve({title: "File download forced:", url: target.url, level: "info", action: "submitted"});
+					}
+					else {
+						resolve({title: "Unexpected response:" + request.responseText, url: target.url, level:"error"});
+					}
+				}
+				else if ( request.status != 0 ) {
+					resolve({title: "Error while submitting", url: description, bottom: "http status: " + request.statusText, level: "error"});
+				}
+			}
+		};
+		
+		request.onerror = function (e) {
+			resolve({title: "Error while submitting", url: description, bottom: "error, cannot reach server: " + mldonkeyUrl, level: "error"});
+		};
+		
+		request.send(null);
+	});
+}
+
 // submit the link to mldonkey
 function submitURI(target) {
 	return new Promise( (resolve, reject) => {
@@ -67,12 +105,7 @@ function submitURI(target) {
 		if ( description == "" )
 			description = uri;
 		
-		let mldonkeyUrl;
-		
-		if ( config.user == "" )
-			mldonkeyUrl = config.protocol + "://" + config.url + ":" + config.port.toString();
-		else
-			mldonkeyUrl = config.protocol + "://" + config.user + ":" + config.password + "@" + config.url + ":" + config.port.toString();
+		let mldonkeyUrl = getMldonkeyUri();
 		
 		let fullUrl = mldonkeyUrl + "/submit?q=";
 		if ( target.type == "torrent_header" )
@@ -93,13 +126,13 @@ function submitURI(target) {
 						resolve({title: "File already downloading:", url: description, level: "warning"});
 					}
 					else if ( resp.search("File already downloaded") != -1 ) {
-						resolve({title: "File has already been downloaded:", url: description, level: "warning"});
+						resolve({title: "File has already been downloaded:", url: description, level: "warning", action: "force_download", label: "Force re-download"});
 					}
 					else if ( resp.search("Unable to match URL") != -1 ) {
 						resolve({title: "Internal error: Unable to match URL:", url: description, level: "error"});
 					}
 					else {
-						resolve({title: "File submitted:", url: description, level:"info"});
+						resolve({title: "File submitted:", url: description, level:"info", action: "submitted"});
 					}
 				}
 				else if ( request.status != 0 ) {
@@ -114,6 +147,16 @@ function submitURI(target) {
 		
 		request.send(null);
 	});
+}
+
+function getMldonkeyUri() {
+	let uri = ""
+	if ( config.user == "" )
+		uri = config.protocol + "://" + config.url + ":" + config.port.toString();
+	else
+		uri = config.protocol + "://" + config.user + ":" + config.password + "@" + config.url + ":" + config.port.toString();
+	
+	return uri;
 }
 
 function getHeaders(event) {

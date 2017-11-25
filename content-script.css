@@ -54,3 +54,22 @@
 	margin: 2px;
 	font-variant: italic;
 }
+
+#mldonkeyfox2_messages_area button.mldonkeyfox2_action_button {
+    background-color: inherit;
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 0.2em;
+    margin-top: 4px;
+    margin-bottom: 1px;
+}
+
+#mldonkeyfox2_messages_area button.mldonkeyfox2_action_button:hover {
+    border-width: 2px;
+    margin-top: 3px;
+    margin-bottom: 0;
+}
+
+#mldonkeyfox2_messages_area button.mldonkeyfox2_action_button:active {
+    filter: brightness(80%);
+}
