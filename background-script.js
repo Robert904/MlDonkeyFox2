@@ -128,6 +128,9 @@ function submitURI(target) {
 					else if ( resp.search("File already downloaded") != -1 ) {
 						resolve({title: "File has already been downloaded:", url: description, level: "warning", action: "force_download", label: "Force re-download"});
 					}
+					else if ( resp.search("File is already shared in") != -1 ) {
+						resolve({title: "File is already present in the incoming folder:", url: description, level: "warning"});
+					}
 					else if ( resp.search("Unable to match URL") != -1 ) {
 						resolve({title: "Internal error: Unable to match URL:", url: description, level: "error"});
 					}
