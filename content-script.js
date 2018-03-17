@@ -118,6 +118,24 @@ function findLinks(elem) {
 				target.removeEventListener("click", linkClicked);
 
 	}
+	for (let target of elem.querySelectorAll("input[type=checkbox]")) {
+        if ( target.value.substring(0,7) == "ed2k://" )
+            if ( config.ed2k ) {
+                target.href = target.value;
+                target.addEventListener("click", linkClicked, true);
+            }
+            else
+                target.removeEventListener("click", linkClicked);
+        else if ( target.value.substring(0,7) == "magnet:" )
+            if ( config.magnet ) {
+                target.href = target.value;
+                target.addEventListener("click", linkClicked, true);
+            }
+            else
+                target.removeEventListener("click", linkClicked);
+
+
+	}
 }
 
 // link click callback
