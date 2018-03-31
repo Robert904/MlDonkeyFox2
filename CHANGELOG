@@ -1,3 +1,6 @@
+mldonkeyfox2 (0.19)
+  * merge from commit a311680 (pantelm) - On http://www.emule-island.ru/, the links are in the value of input tag.
+  
 mldonkeyfox2 (0.18)
   * Propose to force download when the link was downloaded before
   * Give the correct message when selected file is already present in the incoming folder
